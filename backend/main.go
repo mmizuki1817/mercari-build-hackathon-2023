@@ -1,5 +1,3 @@
-// test for PR
-
 package main
 
 import (
