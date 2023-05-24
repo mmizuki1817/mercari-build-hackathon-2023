@@ -35,18 +35,18 @@ conn.close()
 def root():
     return {"message": "Hello, world!"}
 
-@app.get("/users/{user_name}/{password}")
-async def get_users(user_name, password):
+@app.post("/login")
+async def login_users(user_id, password):
     conn = sqlite3.connect(sqlpath)
     cursor = conn.cursor()
-    cursor.execute("SELECT name FROM users")
-    existing_users = [row[0] for row in cursor.fetchall()]
-    if user_name not in existing_users:
+    cursor.execute("SELECT id FROM users")
+    existing_id = [row[0] for row in cursor.fetchall()]
+    if user_id not in existing_id:
         conn.commit()
         conn.close()
         return("User not exist, please register")
     else:
-        cursor.execute("SELECT password FROM users WHERE name = ?", (user_name,))
+        cursor.execute("SELECT password FROM users WHERE id = ?", (user_id,))
         correct_password = cursor.fetchone()[0]
         if str(password) == str(correct_password):
             conn.commit()
@@ -56,17 +56,35 @@ async def get_users(user_name, password):
             return("Password error")
 
 
-@app.post("/users")
-def add_users(user_name: str = Form(...), password: str = Form(...)):
-    logger.info(f"Received name: {user_name}, Receive password: {password}")
+@app.post("/register")
+def add_users(name: str = Form(...), password: str = Form(...)):
+    logger.info(f"Received name: {name}, Receive password: {password}")
     conn = sqlite3.connect(sqlpath)
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM users ")
     existing_users = [row[0] for row in cursor.fetchall()]
-    if user_name in existing_users:
+    if name in existing_users:
         return("User already exists")
     else:
-        cursor.execute("INSERT INTO users(name, password) VALUES(?, ?)", (user_name, password))
+        cursor.execute("INSERT INTO users(name, password) VALUES(?, ?)", (name, password))
         conn.commit()
         conn.close()
         return("Registration successful")
+
+@app.post("/balance")
+def charge(amount: int):
+    conn = sqlite3.connect(sqlpath)
+    cursor = conn.cursor()
+    cursor.execute("SELECT balance FROM users WHERE name = ?" (user_name,))
+    user_balance = cursor.fetchone()[0] + amount
+    cursor.execute("UPDATE users SET balance = ? WHERE name = ?", (user_balance, user_name,))
+    conn.commit()
+    conn.close()
+    return ("Recharge successful")
+
+
+
+
+
+
+
