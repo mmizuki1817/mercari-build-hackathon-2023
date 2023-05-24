@@ -36,28 +36,33 @@ def root():
     return {"message": "Hello, world!"}
 
 @app.post("/login")
-async def login_users(user_id, password):
+async def login_users(user_data: dict):
     conn = sqlite3.connect(sqlpath)
     cursor = conn.cursor()
     cursor.execute("SELECT id FROM users")
     existing_id = [row[0] for row in cursor.fetchall()]
+    user_id = user_data.get("user_id")
+    password = user_data.get("password")
     if user_id not in existing_id:
         conn.commit()
         conn.close()
-        return("User not exist, please register")
+        raise HTTPException(status_code=404, detail="User not found")
     else:
         cursor.execute("SELECT password FROM users WHERE id = ?", (user_id,))
         correct_password = cursor.fetchone()[0]
         if str(password) == str(correct_password):
             conn.commit()
             conn.close()
-            return("Login succeeded")
+            return user_data
         else:
-            return("Password error")
+            raise HTTPException(status_code=404, detail="password uncorrect")
+
 
 
 @app.post("/register")
-def add_users(name: str = Form(...), password: str = Form(...)):
+def add_users(user_data: dict):
+    name=user_data.get("name")
+    password=user_data.get("password")
     logger.info(f"Received name: {name}, Receive password: {password}")
     conn = sqlite3.connect(sqlpath)
     cursor = conn.cursor()
