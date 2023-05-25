@@ -36,9 +36,19 @@ export const Login = () => {
       });
   };
 
+  const moveToSignUp = () => {
+    const elementLogin = document.querySelector<HTMLElement>(".Login");
+    const elementSignup = document.querySelector<HTMLElement>(".Signup");
+    if (elementLogin && elementSignup) {
+      elementLogin.style.display = "none";
+      elementSignup.style.display = "block";
+    }    
+  };
+
   return (
     <div>
       <div className="Login">
+        <p id="MerTitle">LOG IN</p>
         <label id="MerInputLabel">User ID</label>
         <input
           type="number"
@@ -50,6 +60,7 @@ export const Login = () => {
           }}
           required
         />
+
         <label id="MerInputLabel">Password</label>
         <input
           type="password"
@@ -63,6 +74,9 @@ export const Login = () => {
         <button onClick={onSubmit} id="MerButton">
           Login
         </button>
+        <p>
+        Don't have account? <span id="Font" onClick={moveToSignUp} color="blue">  Sign Up</span>
+        </p>
       </div>
     </div>
   );
