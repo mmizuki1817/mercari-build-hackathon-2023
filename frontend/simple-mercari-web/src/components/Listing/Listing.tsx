@@ -70,9 +70,19 @@ export const Listing: React.FC = () => {
         sell(res.id);
       })
       .catch((error: Error) => {
-        toast.error(error.message);
+        if (error instanceof Response)
+        {
+            if (error.status === 400) {
+              toast.error("Price must be bigger than 0");
+            }
+            else if (error.status == 413) {
+              toast.error("The image size is too large. Use smaller image");
+            }
+            else {
+              toast.error(error.message)
+            }
         console.error("POST error:", error);
-      });
+      }});
   };
 
   const sell = (itemID: number) =>
@@ -93,6 +103,7 @@ export const Listing: React.FC = () => {
       .catch((error: Error) => {
         toast.error(error.message);
         console.error("POST error:", error);
+        console.error("POST error:", error.message);
       });
 
   const fetchCategories = () => {

@@ -241,6 +241,10 @@ func (h *Handler) AddItem(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
+	if req.Price <= 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, err)
+	}
+
 	item, err := h.ItemRepo.AddItem(c.Request().Context(), domain.Item{
 		Name:        req.Name,
 		CategoryID:  req.CategoryID,
