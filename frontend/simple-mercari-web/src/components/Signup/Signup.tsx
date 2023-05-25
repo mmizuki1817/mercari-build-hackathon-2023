@@ -4,29 +4,31 @@ import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { fetcher } from "../../helper";
 
-const checkPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const checkResults: {
+// export const checkPasswordLen = (e: React.ChangeEvent<HTMLInputElement>) => {
+//   const length = e.target.value.length;
+//   if (length >= 0 && length < 8) {
+//     return("false");
+//   } else {
+//     return ("true");
+//   }
+// };
+
+export const checkPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const checkedResults: {
     lengthCheck: boolean;
     input: string;
   } = {
     lengthCheck: true,
     input: "",
-  };  
-  const checkApproval  = () => {
-    if (checkResults.lengthCheck) {
-      checkResults.input = event.target.value;
-    } else {
-      checkResults.input = "";
-    }
   };
-  const length = event.target.value.length;
-  if (length >= 0 && length < 8) {
-    checkResults.lengthCheck = false;
+  const length = e.target.value.length;
+  if (length > 0 && length < 8) {
+    checkedResults.lengthCheck = false;
   } else {
-    checkResults.lengthCheck = true;
-    checkApproval();
+    checkedResults.lengthCheck = true;
+    checkedResults.input = e.target.value;
   }
-  return checkResults;
+  return checkedResults;
 };
 
 const moveToLogin = () => {
@@ -49,6 +51,7 @@ const display_none = () => {
 
 export const Signup = () => {
   const [name, setName] = useState<string>();
+  //const [passwordLenBool, checkPasswordLen] = useState<string>();
   //const [password, setPassword] = useState<string>();
   const [password, setPassword] = useState<{
     lengthCheck: boolean;
@@ -70,8 +73,7 @@ export const Signup = () => {
       },
       body: JSON.stringify({
         name: name,
-        password: password.input,
-        //password: password
+        password: password.input
       }),
     })
       .then((user) => {
@@ -110,18 +112,19 @@ export const Signup = () => {
           id="MerTextInput"
           placeholder="password"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-
             setPassword(checkPassword(e));
           }}
           // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          //   checkPasswordLen(e.target.value);
           //   setPassword(e.target.value);
           // }}
-          required
+          
         />
+        
         {password.lengthCheck === false && (
           <p>Your password must be at least 8 characters.</p>
         )}
-        <button onClick={onSubmit} id="MerButton">
+        <button disabled={password.lengthCheck === false} onClick={onSubmit} id="MerButton">
           Signup
         </button>
 
