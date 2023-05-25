@@ -4,15 +4,6 @@ import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { fetcher } from "../../helper";
 
-// export const checkPasswordLen = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   const length = e.target.value.length;
-//   if (length >= 0 && length < 8) {
-//     return("false");
-//   } else {
-//     return ("true");
-//   }
-// };
-
 export const checkPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
   const checkedResults: {
     lengthCheck: boolean;
@@ -51,8 +42,6 @@ const display_none = () => {
 
 export const Signup = () => {
   const [name, setName] = useState<string>();
-  //const [passwordLenBool, checkPasswordLen] = useState<string>();
-  //const [password, setPassword] = useState<string>();
   const [password, setPassword] = useState<{
     lengthCheck: boolean;
     input: string;
@@ -114,11 +103,6 @@ export const Signup = () => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setPassword(checkPassword(e));
           }}
-          // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          //   checkPasswordLen(e.target.value);
-          //   setPassword(e.target.value);
-          // }}
-          
         />
         
         {password.lengthCheck === false && (
