@@ -43,11 +43,11 @@ export const Home = () => {
   const signUpAndSignInPage = (
     <>
       <div>
-        <Signup />
-      </div>
-      or
-      <div>
         <Login />
+      </div>
+
+      <div>
+        <Signup />
       </div>
     </>
   );
