@@ -78,6 +78,9 @@ export const Listing: React.FC = () => {
             else if (error.status == 413) {
               toast.error("The image size is too large. Use smaller image");
             }
+            else if (error.status == 415) {
+              toast.error("Invalid file format, only JPG files are allowed");
+            }
             else {
               toast.error(error.message)
             }
