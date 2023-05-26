@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { fetcher } from "../../helper";
+import { error } from "console";
 
 export const Login = () => {
   const [userID, setUserID] = useState<number>();
@@ -32,7 +33,9 @@ export const Login = () => {
       })
       .catch((err) => {
         console.log(`POST error:`, err);
-        toast.error(err.message);
+        if (err instanceof Response) {
+          toast.error("Invalid ID or Password");
+        }
       });
   };
 
