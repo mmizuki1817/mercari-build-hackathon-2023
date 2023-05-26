@@ -14,7 +14,9 @@ export const Header: React.FC = () => {
     <>
       <header>
         <p>
-          <b>Simple Mercari</b>
+          <a href="https://jp.mercari.com">
+            <img className="Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Mercari_logo.svg/768px-Mercari_logo.svg.png" alt="logo"/>
+          </a>
         </p>
         <div className="LogoutButtonContainer">
           <button onClick={onLogout} id="MerButton">
