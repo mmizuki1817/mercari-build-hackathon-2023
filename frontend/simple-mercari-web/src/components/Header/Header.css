@@ -1,11 +1,52 @@
 header {
+  position: fixed;
   display: flex;
   flex-direction: row;
+  padding-top: 10px; 
+  border-bottom: 1px solid #ddd;
+  justify-content: space-between;
+  width: 90%;
+  background-color: #222427;
+}
+
+header > div > p {
+  margin-left: 5px;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  padding-top: 70px; 
+  justify-content: space-between;
+  width: 100%;
+  float: right;
+}
+
+.logo {
+  margin-top: 20px;
+  margin-left: 40px;
+  font-size: 25px;
+  float: left;
 }
 
 .LogoutButtonContainer {
-  position: fixed;
-  right: 1rem;
-  top: 1rem;
-  width: 100px;
+  margin-top: 20px;
+  margin-right: 1%;
+  width: 150px;
+  font: 20px;
+} 
+
+
+.MerHeaderItem {
+  height: 50px;
+  width: 100%;
+  border: 1px solid;
+  margin-right: -1px;
+  color: white;
+  background-color: #222427;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }

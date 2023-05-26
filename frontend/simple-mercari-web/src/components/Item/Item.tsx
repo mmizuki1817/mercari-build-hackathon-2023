@@ -41,8 +41,8 @@ export const Item: React.FC<{ item: Item }> = ({ item }) => {
       <img
         src={itemImage}
         alt={item.name}
-        height={480}
-        width={480}
+        height={240}
+        width={240}
         onClick={() => navigate(`/item/${item.id}`)}
       />
       <p>
