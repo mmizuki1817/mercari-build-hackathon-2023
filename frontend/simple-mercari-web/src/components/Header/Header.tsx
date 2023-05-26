@@ -20,36 +20,32 @@ export const Header: React.FC = () => {
 
   return (
     <header>
-      {/* <div className="inner_header"> */}
-        <p className="logo">
-          <b>Simple Mercari</b>
-        </p>
-        
-        <nav>
-          <div className="MerHeaderItem" onClick={() => navigate("/")}>
-            <FaHome />
-            <p>Home</p>
-          </div>
-          <div className="MerHeaderItem" onClick={() => navigate("/sell")}>
-            <FaCamera />
-            <p>Listing</p>
-          </div>
-          <div className="MerHeaderItem"
-            onClick={() => navigate(`/user/${cookies.userID}`)}>
-            <FaUser />
-            <p>MyPage</p>
-          </div>
-        </nav>
-          <div className="LogoutButtonContainer">
-          <button onClick={onLogout} id="MerButton">
-            Logout
-          </button>
+      <p>
+        <a href="https://jp.mercari.com">
+          <img className="Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Mercari_logo.svg/768px-Mercari_logo.svg.png" alt="logo"/>
+        </a>
+      </p>
+      
+      <nav>
+        <div className="MerHeaderItem" onClick={() => navigate("/")}>
+          <FaHome />
+          <p>Home</p>
         </div>
-
-        
-        
-
-      {/* </div> */}
+        <div className="MerHeaderItem" onClick={() => navigate("/sell")}>
+          <FaCamera />
+          <p>Listing</p>
+        </div>
+        <div className="MerHeaderItem"
+          onClick={() => navigate(`/user/${cookies.userID}`)}>
+          <FaUser />
+          <p>MyPage</p>
+        </div>
+      </nav>
+        <div className="LogoutButtonContainer">
+        <button onClick={onLogout} id="MerButton">
+          Logout
+        </button>
+      </div>
     </header>
   );
 }

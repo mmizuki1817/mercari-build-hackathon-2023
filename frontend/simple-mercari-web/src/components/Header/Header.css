@@ -22,14 +22,29 @@ nav {
   float: right;
 }
 
-.logo {
+/* .logo {
   margin-top: 20px;
   margin-left: 40px;
   font-size: 25px;
   float: left;
+} */
+
+.Logo{
+  width: 200px;
+  height: auto;
 }
 
 .LogoutButtonContainer {
+  /* position: fixed; */
+  margin-right: 60px;
+  right: 1rem;
+  top: 1rem;
+  width: 100px;
+}
+
+
+#MerButton {
+  background-color: #c23636;
   margin-top: 20px;
   margin-right: 1%;
   width: 150px;
