@@ -54,7 +54,7 @@ export const Home = () => {
 
   const itemListPage = (
     <MerComponent>
-      <div>
+      <div >
         <span>
           <p>Logined User ID: {cookies.userID}</p>
         </span>
@@ -63,5 +63,5 @@ export const Home = () => {
     </MerComponent>
   );
 
-  return <>{cookies.token ? itemListPage : signUpAndSignInPage}</>;
+  return <><div className="Home">{cookies.token ? itemListPage : signUpAndSignInPage}</div></>;
 };

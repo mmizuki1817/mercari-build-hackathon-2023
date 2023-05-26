@@ -13,7 +13,7 @@ export const checkPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     input: "",
   };
   const length = e.target.value.length;
-  if (length > 0 && length < 8) {
+  if (length >= 0 && length < 8) {
     checkedResults.lengthCheck = false;
   } else {
     checkedResults.lengthCheck = true;
@@ -75,7 +75,8 @@ export const Signup = () => {
       })
       .catch((err) => {
         console.log(`POST error:`, err);
-        toast.error(err.message);
+        toast.error("Failed to create account")
+        //toast.error(err.message);
       });
   };
 
