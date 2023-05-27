@@ -144,7 +144,7 @@ export const UserProfile: React.FC = () => {
 
           <div>
             <h2>Item List</h2>
-            {<ItemList items={items} />}
+              {<ItemList items={items} />}
           </div>
         </div>
       </div>
