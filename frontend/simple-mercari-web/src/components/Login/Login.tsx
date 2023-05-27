@@ -77,7 +77,7 @@ export const Login = () => {
         <button onClick={onSubmit} id="MerButton">
           Login
         </button>
-        <p>
+        <p className="word">
         Don't have account? <span id="Font" onClick={moveToSignUp} color="blue">  Sign Up</span>
         </p>
       </div>
