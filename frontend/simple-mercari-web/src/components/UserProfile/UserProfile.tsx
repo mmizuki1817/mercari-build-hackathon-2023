@@ -22,7 +22,10 @@ export const checkBalance = (e: React.ChangeEvent<HTMLInputElement>, balance: Nu
     input: 0
   };
   const addedbalance = Number(e.target.value);
-  if (addedbalance < 0) {
+  if (!Number(addedbalance)){
+    checkedResults.balanceCheck = 3;
+  }
+  else if (addedbalance < 0) {
     checkedResults.balanceCheck = -1;
   } else if (addedbalance >= Number.MAX_SAFE_INTEGER) {
     // overflow
