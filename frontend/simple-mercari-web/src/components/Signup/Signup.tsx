@@ -113,7 +113,7 @@ export const Signup = () => {
           Signup
         </button>
 
-      <p>
+      <p className="word">
         Already a member? <span id="Font" onClick={moveToLogin} color="blue">Login</span>
       </p>
       </div>
