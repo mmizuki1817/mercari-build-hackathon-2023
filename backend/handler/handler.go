@@ -111,6 +111,8 @@ type Handler struct {
 	ItemRepo db.ItemRepository
 }
 
+
+
 func GetSecret() string {
 	if secret := os.Getenv("SECRET"); secret != "" {
 		return secret
@@ -487,15 +489,28 @@ func (h *Handler) Purchase(c echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
+	
+	// DONE:if not enough balance(balance consistency)
+	// DONE: if it is fail here, item status is still sold
+	if err := checkBalance(item.Price, user.Balance); err != nil {
+		if err := h.ItemRepo.UpdateItemStatus(ctx, int32(itemID), domain.ItemStatusInitial); err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		return echo.NewHTTPError(http.StatusPreconditionFailed, err)
+	}
+	// DONE:not to buy own items. 自身の商品を買おうとしていたら、http.StatusPreconditionFailed(412)
+	// DONE: if it is fail here, item status is still sold
+	sellerID := item.UserID
+	if err := checkOwnItems(sellerID, userID); err != nil {
+		if err := h.ItemRepo.UpdateItemStatus(ctx, int32(itemID), domain.ItemStatusInitial); err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		return echo.NewHTTPError(http.StatusPreconditionFailed, err)
+	}
 
-	// TODO: if it is fail here, item status is still sold
-	// TODO: balance consistency
-	// TODO: not to buy own items. 自身の商品を買おうとしていたら、http.StatusPreconditionFailed(412)
 	if err := h.UserRepo.UpdateBalance(ctx, userID, user.Balance-item.Price); err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
-
-	sellerID := item.UserID
 
 	seller, err := h.UserRepo.GetUser(ctx, sellerID)
 	// TODO: not found handling
@@ -510,6 +525,21 @@ func (h *Handler) Purchase(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, "successful")
 }
+
+func checkBalance(itemPrice int64, userBalace int64) (error){
+	if itemPrice > userBalace {
+		return (fmt.Errorf("Insufficient balance"))
+	}
+	return nil
+}
+
+func checkOwnItems(sellerID int64, userID int64) (error){
+	if sellerID == userID {
+		return (fmt.Errorf("Can't buy your own item"))
+	}
+	return nil
+}
+
 
 func getUserID(c echo.Context) (int64, error) {
 	user := c.Get("user").(*jwt.Token)

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { MerComponent } from "../MerComponent";
 import { toast } from "react-toastify";
@@ -28,6 +29,8 @@ export const Listing: React.FC = () => {
   const [values, setValues] = useState<formDataType>(initialState);
   const [categories, setCategories] = useState<Category[]>([]);
   const [cookies] = useCookies(["token", "userID"]);
+
+  const navigate = useNavigate();
 
   const onValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
@@ -68,6 +71,7 @@ export const Listing: React.FC = () => {
     })
       .then((res) => {
         sell(res.id);
+        navigate(`/user/${cookies.userID}`)
       })
       .catch((error: Error) => {
         toast.error(error.message);

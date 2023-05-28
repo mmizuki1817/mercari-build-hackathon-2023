@@ -13,10 +13,48 @@ interface Item {
   category_name: string;
 }
 
+export const checkBalance = (e: React.ChangeEvent<HTMLInputElement>, balance: Number) => {
+  const checkedResults: {
+    balanceCheck: Number;
+    input: Number;
+  } = {
+    balanceCheck: 0,
+    input: 0
+  };
+  const addedbalance = Number(e.target.value);
+  if (!Number(addedbalance)){
+    checkedResults.balanceCheck = 3;
+  }
+  else if (addedbalance < 0) {
+    checkedResults.balanceCheck = -1;
+  } else if (addedbalance >= Number.MAX_SAFE_INTEGER) {
+    // overflow
+    checkedResults.balanceCheck = 1;
+  } else if (addedbalance + Number(balance) >= Number.MAX_SAFE_INTEGER) {
+    // overflow
+    checkedResults.balanceCheck = 1;
+  } 
+  else if (!Number.isInteger(addedbalance)) {
+    checkedResults.balanceCheck = 2;
+  }
+  else {
+    checkedResults.balanceCheck = 0;
+    checkedResults.input = Number(e.target.value);
+  }
+  return checkedResults;
+};
+
+
 export const UserProfile: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [balance, setBalance] = useState<number>();
-  const [addedbalance, setAddedBalance] = useState<number>();
+  const [addedbalance, setAddedBalance] = useState<{
+    balanceCheck: Number;
+    input: Number;
+  }>({
+    balanceCheck: 0,
+    input: 0
+  });
   const [cookies] = useCookies(["token"]);
   const params = useParams();
 
@@ -68,7 +106,7 @@ export const UserProfile: React.FC = () => {
         Authorization: `Bearer ${cookies.token}`,
       },
       body: JSON.stringify({
-        balance: addedbalance,
+        balance: addedbalance.input,
       }),
     })
       .then((_) => window.location.reload())
@@ -76,7 +114,7 @@ export const UserProfile: React.FC = () => {
         console.log(`POST error:`, err);
         toast.error(err.message);
       });
-  };
+    };
 
   return (
     <MerComponent>
@@ -92,18 +130,21 @@ export const UserProfile: React.FC = () => {
               id="MerTextInput"
               placeholder="0"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setAddedBalance(Number(e.target.value));
+                setAddedBalance(checkBalance(e, Number(balance)));
               }}
               required
             />
-            <button onClick={onBalanceSubmit} id="MerButton">
+            {addedbalance.balanceCheck !== 0 && (
+              <p>Invalid value</p>
+            )}
+            <button disabled={addedbalance.balanceCheck !== 0} onClick={onBalanceSubmit} id="MerButton">
               Add balance
             </button>
           </div>
 
           <div>
             <h2>Item List</h2>
-            {<ItemList items={items} />}
+              {<ItemList items={items} />}
           </div>
         </div>
       </div>

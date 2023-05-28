@@ -9,3 +9,12 @@ header {
   top: 1rem;
   width: 100px;
 }
+
+.Logo{
+  width: 300px;
+  height: auto;
+}
+
+#MerButton:hover {
+  background-color: #c23636;
+}

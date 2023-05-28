@@ -1,16 +1,16 @@
 body {
-  background-color: #222427;
+  background-color: #ffffff;
 }
 
 .MerComponent {
-  background-color: #222427;
+  background-color: #ffffff;
   min-height: 8vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: left;
   font-size: calc(10px + 1vmin);
-  color: white;
+  color: #606060;
 }
 
 #MerTextInput {
@@ -22,11 +22,16 @@ body {
   width: 300px;
 }
 
+#MerTextInput:focus {
+  outline: 2px solid #91caee; /* 添加蓝色的边框 */
+  box-shadow: 0 0 5px #91caee; /* 添加蓝色的阴影效果 */
+}
+
 #MerTitle {
   font-weight: bold;
   font-size: 18px;
 
-  color: white;
+  color: #222427;
   width: 300px;
   text-align: center;
 }
@@ -42,7 +47,7 @@ body {
 #MerButton {
   /* color: var(--alias-color-text-inverse-default); */
   background-color: #da3e50;
-  color: #222427;
+  color: #ffffff;
   font: inherit;
   transition-timing-function: ease-in-out;
   transition-duration: 0.1s;
@@ -102,20 +107,31 @@ body {
 }
 
 #Font {
-  color: #a9ceec;
+  color: #2994ec;
   text-decoration:underline;
 }
 
+ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;;
+  flex-wrap: wrap;
+  
+}
+
 .Login {
-  display: block
+  display: block;
+  color: #222427;
+  
 }
 
 .Signup {
   display: none;
+  color: #222427;
 }
 
 .Title {
-  background-color: #222427;
+  background-color: #ffffff;
   min-height: 8vh;
   display: flex;
   flex-direction: column;
@@ -130,7 +146,7 @@ body {
 }
 
 .ItemList {
-  background-color: #222427;
+  background-color: #ffffff;
   min-height: 8vh;
   display: flex;
   flex-direction: column;
@@ -162,4 +178,16 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: left;
+}
+
+.word {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.userID {
+  position: fixed;
+  right: 1rem;
+  top: 2rem;
+  width: 100px;
 }
