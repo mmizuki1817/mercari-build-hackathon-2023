@@ -121,6 +121,9 @@ export const Listing: React.FC = () => {
   return (
     <MerComponent>
       <div className="Listing">
+      <span className="userID">
+          <p>User ID: {cookies.userID}</p>
+        </span>
         <form onSubmit={onSubmit} className="ListingForm">
           <div>
             <input

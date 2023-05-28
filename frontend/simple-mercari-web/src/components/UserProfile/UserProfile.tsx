@@ -55,7 +55,7 @@ export const UserProfile: React.FC = () => {
     balanceCheck: 0,
     input: 0
   });
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["userID", "token"]);
   const params = useParams();
 
   const fetchItems = () => {
@@ -119,6 +119,9 @@ export const UserProfile: React.FC = () => {
   return (
     <MerComponent>
       <div className="UserProfile">
+      <span className="userID">
+          <p>User ID: {cookies.userID}</p>
+        </span>
         <div>
           <div>
             <h2>
