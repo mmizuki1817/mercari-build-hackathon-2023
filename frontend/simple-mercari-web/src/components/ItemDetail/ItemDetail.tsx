@@ -80,7 +80,8 @@ export const ItemDetail = () => {
       .then((_) => window.location.reload())
       .catch((err) => {
         console.log(`POST error:`, err);
-        toast.error(err.message);
+        toast.error(err);
+        toast.error("faied to purchase");
       });
   };
 

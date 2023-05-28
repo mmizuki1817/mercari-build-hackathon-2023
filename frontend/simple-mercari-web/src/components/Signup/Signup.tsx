@@ -114,7 +114,7 @@ export const Signup = () => {
         </button>
 
       <p className="word">
-        Already a member? <span id="Font" onClick={moveToLogin} color="blue">Login</span>
+        Already a member? <span id="Font" onClick={moveToLogin}>Login</span>
       </p>
       </div>
       {userID ? (

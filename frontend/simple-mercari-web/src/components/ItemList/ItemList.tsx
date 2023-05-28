@@ -14,10 +14,12 @@ interface Prop {
 export const ItemList: React.FC<Prop> = (props) => {
   return (
     <div>
-      {props.items &&
-        props.items.map((item) => {
-          return <Item item={item} />;
-        })}
+      <ul>
+        {props.items &&
+          props.items.map((item) => {
+            return <li><Item item={item} /> </li>;
+          })} 
+      </ul>
     </div>
   );
 };
