@@ -9,6 +9,8 @@ import (
 	"os"
 	"strconv"
 	"time"
+	"path/filepath"
+	"strings"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
@@ -203,7 +205,7 @@ func (h *Handler) Login(c echo.Context) error {
 }
 
 func (h *Handler) AddItem(c echo.Context) error {
-	// TODO: validation
+	// TODO: validation <- done
 	// http.StatusBadRequest(400)
 	ctx := c.Request().Context()
 
@@ -219,6 +221,10 @@ func (h *Handler) AddItem(c echo.Context) error {
 	file, err := c.FormFile("image")
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+	ext := strings.ToLower(filepath.Ext(file.Filename))
+	if ext != ".jpg" && ext != ".jpeg" {
+		return echo.NewHTTPError(http.StatusUnsupportedMediaType, "invalid file format, only JPG files are allowed")
 	}
 
 	src, err := file.Open()
@@ -241,6 +247,10 @@ func (h *Handler) AddItem(c echo.Context) error {
 			return echo.NewHTTPError(http.StatusBadRequest, "invalid categoryID")
 		}
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+
+	if req.Price <= 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
 	item, err := h.ItemRepo.AddItem(c.Request().Context(), domain.Item{
