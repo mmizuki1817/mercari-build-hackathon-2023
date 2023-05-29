@@ -493,7 +493,7 @@ func (h *Handler) Purchase(c echo.Context) error {
 	// DONE:if not enough balance(balance consistency)
 	// DONE: if it is fail here, item status is still sold
 	if err := checkBalance(item.Price, user.Balance); err != nil {
-		if err := h.ItemRepo.UpdateItemStatus(ctx, int32(itemID), domain.ItemStatusInitial); err != nil {
+		if err := h.ItemRepo.UpdateItemStatus(ctx, int32(itemID), domain.ItemStatusOnSale); err != nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, err)
 		}
 		return echo.NewHTTPError(http.StatusPreconditionFailed, err)
@@ -502,7 +502,7 @@ func (h *Handler) Purchase(c echo.Context) error {
 	// DONE: if it is fail here, item status is still sold
 	sellerID := item.UserID
 	if err := checkOwnItems(sellerID, userID); err != nil {
-		if err := h.ItemRepo.UpdateItemStatus(ctx, int32(itemID), domain.ItemStatusInitial); err != nil {
+		if err := h.ItemRepo.UpdateItemStatus(ctx, int32(itemID), domain.ItemStatusOnSale); err != nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, err)
 		}
 		return echo.NewHTTPError(http.StatusPreconditionFailed, err)
